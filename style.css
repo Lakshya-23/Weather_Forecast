@@ -31,10 +31,6 @@ body{
     padding-left: 8px;
     padding-right: 8px;
 }
-#mainw{
-    height:"150px"; 
-    width:"160px";
-}
 #scontainer{
     display: flex;
     width: 213px;
@@ -69,6 +65,15 @@ body{
 }
 .weather_img{
     margin-top: 30px;
+}
+#mainw{
+    width: 165px;
+    height: 160px;
+}
+#weekimg{
+    height:67px; 
+    width:70px;
+    margin-bottom: 4.5px;
 }
 .txt{
     color: white;
@@ -112,7 +117,7 @@ body{
     height: 680px;
     width: 77.5%;
     padding-bottom: 0;
-    padding-left: 29px;
+    padding-left: 10px;
     padding-right: 0;
 }
 .weektemp{
@@ -122,9 +127,11 @@ body{
 }
 .wtempchild{
     background-color:hsla(0, 0%, 50%, 0.1);
-    height:120px;
-    width:110px;
-    margin: 10px;
+    height:140px;
+    width:102px;
+    margin: 5px;
+    margin-top: 0px;
+    margin-bottom: 0px;
     border-radius: 15px;
 }
 .highlight{
@@ -153,7 +160,8 @@ body{
     display: flex;
 }
 .day_name{
-    margin-top: 8px;
+    margin-top: 3px;
+    margin-bottom: 9px;
 }
 .class_head{
     margin: 15px;
