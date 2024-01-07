@@ -58,7 +58,7 @@ function getrestparameter(city){
     .then((Response)=>Response.json())
     .then((data)=>{
         let today = data.currentConditions;
-        updateuv(today.uvindex);
+        updateuv(data.days[0].uvindex);
         updateforecast(data.days);
         main_weather.src =updateicon(today.icon);
         temp.textContent=(today.temp);
@@ -145,6 +145,7 @@ function updateicon(icon1){
 
 function updateuv(uv1){
     uv.textContent = uv1;
+    console.log(uv1);
     if (uv1<=2){
         uv_s.textContent ="Low";
     }else if(uv1<=5){
