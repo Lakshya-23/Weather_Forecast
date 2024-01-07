@@ -147,6 +147,7 @@ function updateuv(uv1){
     uv.textContent = uv1;
     console.log(uv1);
     if (uv1<=2){
+        uv.textContent = uv1 +2;
         uv_s.textContent ="Low";
     }else if(uv1<=5){
         uv_s.textContent="Moderate";
