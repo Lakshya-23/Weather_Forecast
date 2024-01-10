@@ -25,22 +25,22 @@ function getday(){
 getday();
 
 function getip(){
-    fetch("https://geolocation-db.com/json/" ,{method:"GET",})
+    let apikey="8679ce6f4de74358b04d4025e6890f05";
+    fetch(`https://api.ipgeolocation.io/ipgeo?apiKey=${apikey}`,{method:"GET",})
     .then((Response)=>Response.json())
     .then((data)=>{
         console.log(data);
-        getweather(data.city);
-        getrestparameter(data.city);
+        getweather(data.city,data.latitude,data.longitude);
+        getrestparameter(data.city,data.latitude,data.longitude);
     })
 }
 getip(); 
-function getweather(city){
+function getweather(city,latitude,longitude){
     let apikey = "8f8dca08f137b492cfd3dda51ab0addb";
-    
-    fetch(`https://api.openweathermap.org/data/2.5/weather?appid=${apikey}&units=metric&q=${city}`,{method:"GET",})
+    if(city){
+        fetch(`https://api.openweathermap.org/data/2.5/weather?appid=${apikey}&units=metric&q=${city}`,{method:"GET",})
     .then((Response)=>Response.json())
     .then((data)=>{
-        // temp.textContent=(data.main.temp).toFixed(1);
         wind.textContent = (data.wind.speed)+" km/s";
         airp.textContent = data.main.pressure+" hpa";
         updatehumidity(data.main.humidity);
@@ -48,13 +48,25 @@ function getweather(city){
         wcondition.textContent = (data.weather[0].description);
         sunrise.textContent=sunrises(data.sys.sunrise);
         sunset.textContent=sunsets(data.sys.sunset);
-        // main_weather.src =updateicon(data.weather[0].icon) 
-    });  
+    });
+    }else {
+        fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apikey}`,{method:"GET",})
+        .then((Response)=>Response.json())
+        .then((data)=>{
+            wind.textContent = (data.wind.speed)+" km/s";
+            airp.textContent = data.main.pressure+" hpa";
+            updatehumidity(data.main.humidity);
+            updatevisibility(((data.visibility)/1000).toFixed(2));
+            wcondition.textContent = (data.weather[0].description);
+            sunrise.textContent=sunrises(data.sys.sunrise);
+            sunset.textContent=sunsets(data.sys.sunset);
+    });
+    }
 }
-
-function getrestparameter(city){
+function getrestparameter(city,latitude,longitude){
     let apikey ="556W6Z7EX2GT2SRFZCR254SUR";
-    fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${city}?unitGroup=metric&key=${apikey}&iconSet=icons2`,{method:"GET",})
+    if(city){
+        fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${city}?unitGroup=metric&key=${apikey}&iconSet=icons2`,{method:"GET",})
     .then((Response)=>Response.json())
     .then((data)=>{
         let today = data.currentConditions;
@@ -63,6 +75,18 @@ function getrestparameter(city){
         main_weather.src =updateicon(today.icon);
         temp.textContent=(today.temp);
     });
+    }else{
+        fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${latitude},${longitude}?unitGroup=metric&key=${apikey}&iconSet=icons2`,{method:"GET",})
+    .then((Response)=>Response.json())
+    .then((data)=>{
+        let today = data.currentConditions;
+        updateuv(today.uvindex);
+        updateforecast(data.days);
+        main_weather.src =updateicon(today.icon);
+        temp.textContent=(today.temp);
+    });
+    }
+    
 }
 function sunrises(unixTimestamp) {
     const utcMilliseconds = unixTimestamp * 1000;
@@ -145,7 +169,6 @@ function updateicon(icon1){
 
 function updateuv(uv1){
     uv.textContent = uv1;
-    console.log(uv1);
     if (uv1<=2){
         uv.textContent = uv1 +2;
         uv_s.textContent ="Low";
