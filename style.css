@@ -163,6 +163,13 @@ body{
     margin-top: 3px;
     margin-bottom: 9px;
 }
+.pin{
+    margin-left: 35px;
+    font-size: 23px;
+}
+#place{
+    font-size: 23px;
+}
 .class_head{
     margin: 15px;
     font-size: 17px;

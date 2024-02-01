@@ -12,7 +12,8 @@ const day = document.querySelector(".day"),
  uv = document.querySelector(".uv"),
  uv_s = document.querySelector(".uv_text"),
  weekforecast = document.querySelector(".weektemp"),
- main_weather=document.querySelector("#mainw");
+ main_weather=document.querySelector("#mainw"),
+ place = document.getElementById("place");
 function getday(){
     let days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
     let now = new Date();
@@ -30,6 +31,7 @@ function getip(){
     .then((Response)=>Response.json())
     .then((data)=>{
         console.log(data);
+        place.textContent =data.city;
         getweather(data.city,data.latitude,data.longitude);
         getrestparameter(data.city,data.latitude,data.longitude);
     })
